@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: 'Kanit', sans-serif;
+  touch-action: manipulation !important;
+}
+
+.input-group{
+  display: block;
+  margin-bottom: 12px;
+}
