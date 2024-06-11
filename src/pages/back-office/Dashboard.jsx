@@ -1,11 +1,10 @@
 import React from "react";
-
-export default function Dashboard() {
+function Dashboard(){
     return (
         <>
-            <div className="">
-                dashboard
-            </div>
+            <p>Dashboard</p>
         </>
     )
 }
+
+export default Dashboard
