@@ -24,12 +24,12 @@ export default function Login() {
                                 <form onSubmit={handleSubmit(handlerSubmit)}>
                                     <div className="input-group">
                                         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
-                                        <input type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="ชื่อผู้ใช้งาน" name="username"  {...register("username", { required: true })} />
+                                        <input type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-40" placeholder="ชื่อผู้ใช้งาน" name="username"  {...register("username", { required: true })} />
                                         <p className="text-red-500 text-xs italic">{errors.username ? "Please enter a valid username" : ""}</p>
                                     </div>
                                     <div className="input-group">
                                         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                                        <input type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 " placeholder="รหัสผ่าน" name="password" {...register("password", { required: true })} />
+                                        <input type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" placeholder="รหัสผ่าน" name="password" {...register("password", { required: true })} />
                                         <p className="text-red-500 text-xs italic">{errors.password ? "Please enter a valid password" : ""}</p>
                                     </div>
                                     <div className="text-center mt-8">
