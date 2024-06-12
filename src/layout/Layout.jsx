@@ -9,9 +9,7 @@ export default function Layout() {
     const [isOpenSidebar, setIsOpenSidebar] = useState(false)
 
     function handlerOpenSidebar(isOpen) {
-        console.log(isOpen)
         setIsOpenSidebar(isOpen)
-
     }
     return (
         <>
@@ -26,7 +24,6 @@ export default function Layout() {
                     <Outlet />
                 </div>
             </main>
-            {/* <Footer /> */}
         </>
     )
 }
