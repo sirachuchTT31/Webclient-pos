@@ -1,11 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-
+import authService from "../../service/authentication.service";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+import LoginMessage from "../../components/Alert/LoginMessage";
+import localstorageServicefrom from '../../service/localstorage.service'
 export default function Login() {
+    const MySwal = withReactContent(Swal)
     const { register, handleSubmit, formState: { errors }, } = useForm();
+    const [errorMessageElement, seterrorerrorMessageElement] = useState('');
 
-    function handlerSubmit(data) {
+    async function handlerSubmit(data) {
         console.log(data)
+        const payload = {
+            email: data.username,
+            password: data.password
+        }
+        await authService.signIn(payload).then((res) => {
+            if (res.data.status === true) {
+                seterrorerrorMessageElement('')
+                localstorageServicefrom.setAuthorization(res.data.result);
+            }
+            else {
+                seterrorerrorMessageElement(res.data.message)
+            }
+        }).catch((err) => {
+            seterrorerrorMessageElement('Internet disconnect')
+            console.log(err)
+        })
+
     }
 
     return (
@@ -32,6 +55,7 @@ export default function Login() {
                                         <input type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" placeholder="รหัสผ่าน" name="password" {...register("password", { required: true })} />
                                         <p className="text-red-500 text-xs italic">{errors.password ? "Please enter a valid password" : ""}</p>
                                     </div>
+                                    <LoginMessage message={errorMessageElement} />
                                     <div className="text-center mt-8">
                                         <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Sign In</button>
                                     </div>
