@@ -5,13 +5,14 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import LoginMessage from "../../components/Alert/LoginMessage";
 import localstorageServicefrom from '../../service/localstorage.service'
+import { redirect } from "react-router-dom";
+import Spinner from "../../components/Spinner/Spinner";
 export default function Login() {
     const MySwal = withReactContent(Swal)
     const { register, handleSubmit, formState: { errors }, } = useForm();
+    const [isLoading, setisLoading] = useState(false);
     const [errorMessageElement, seterrorerrorMessageElement] = useState('');
-
     async function handlerSubmit(data) {
-        console.log(data)
         const payload = {
             email: data.username,
             password: data.password
@@ -20,6 +21,10 @@ export default function Login() {
             if (res.data.status === true) {
                 seterrorerrorMessageElement('')
                 localstorageServicefrom.setAuthorization(res.data.result);
+                setisLoading(true)
+                setTimeout(() => {
+                    window.location.href = '/dashboard'
+                }, 3000)
             }
             else {
                 seterrorerrorMessageElement(res.data.message)

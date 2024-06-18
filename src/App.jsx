@@ -7,6 +7,7 @@ import Layout from "./layout/Layout";
 import Dashboard from "./pages/Back-office/Dashboard"
 import localstorageServicefrom from './service/localstorage.service'
 import PrivateRoute from "./common/PrivateRoute.jsx";
+import PublicRoute from "./common/PublicRoute.jsx";
 function App() {
   const isAuthentication = localstorageServicefrom.getAccesstoken() ? true : false
   return (
@@ -20,7 +21,11 @@ function App() {
                   <Dashboard />
                 </PrivateRoute>} />
             </Route>
-            <Route path="/auth" element={<Login />}></Route>
+            <Route path="/auth" element={
+              <PublicRoute isAuthenticated={isAuthentication}>
+                <Login />
+              </PublicRoute>}>
+            </Route>
           </Routes>
         </BrowserRouter>
       }
