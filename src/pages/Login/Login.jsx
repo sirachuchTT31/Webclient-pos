@@ -1,39 +1,39 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import authService from "../../service/authentication.service";
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+// import Swal from 'sweetalert2'
+// import withReactContent from 'sweetalert2-react-content'
 import LoginMessage from "../../components/Alert/LoginMessage";
 import localstorageServicefrom from '../../service/localstorage.service'
-import { redirect } from "react-router-dom";
-import Spinner from "../../components/Spinner/Spinner";
+// import { redirect } from "react-router-dom";
+import Regex from "../../common/Regex/Regex";
 export default function Login() {
-    const MySwal = withReactContent(Swal)
+    // const MySwal = withReactContent(Swal)
     const { register, handleSubmit, formState: { errors }, } = useForm();
-    const [isLoading, setisLoading] = useState(false);
     const [errorMessageElement, seterrorerrorMessageElement] = useState('');
     async function handlerSubmit(data) {
-        const payload = {
-            email: data.username,
-            password: data.password
-        }
-        await authService.signIn(payload).then((res) => {
-            if (res.data.status === true) {
-                seterrorerrorMessageElement('')
-                localstorageServicefrom.setAuthorization(res.data.result);
-                setisLoading(true)
-                setTimeout(() => {
+        if (Regex.validEmail.test(data.email)) {
+            const payload = {
+                email: data.email.trim(),
+                password: data.password.trim()
+            }
+            await authService.signIn(payload).then((res) => {
+                if (res.data.status === true) {
+                    seterrorerrorMessageElement('')
+                    localstorageServicefrom.setAuthorization(res.data.result);
                     window.location.href = '/dashboard'
-                }, 3000)
-            }
-            else {
-                seterrorerrorMessageElement(res.data.message)
-            }
-        }).catch((err) => {
-            seterrorerrorMessageElement('Internet disconnect')
-            console.log(err)
-        })
-
+                }
+                else {
+                    seterrorerrorMessageElement(res.data.message)
+                }
+            }).catch((err) => {
+                seterrorerrorMessageElement('Internet disconnect')
+                console.log(err)
+            })
+        }
+        else {
+            seterrorerrorMessageElement('Email is invalid OR Password is invalid')
+        }
     }
 
     return (
@@ -51,18 +51,32 @@ export default function Login() {
                             <div className="w-1/3 border border-solid min-h-60 p-5 right-28 rounded-xl ">
                                 <form onSubmit={handleSubmit(handlerSubmit)}>
                                     <div className="input-group">
-                                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
-                                        <input type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-40" placeholder="ชื่อผู้ใช้งาน" name="username"  {...register("username", { required: true })} />
-                                        <p className="text-red-500 text-xs italic">{errors.username ? "Please enter a valid username" : ""}</p>
+                                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                                        <input type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-40" placeholder="อีเมล์" name="email"  {...register("email", { required: true })} />
+                                        <p className="text-red-500 text-xs italic">{errors.email ? "Please enter a valid email" : ""}</p>
                                     </div>
                                     <div className="input-group">
                                         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                                         <input type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" placeholder="รหัสผ่าน" name="password" {...register("password", { required: true })} />
                                         <p className="text-red-500 text-xs italic">{errors.password ? "Please enter a valid password" : ""}</p>
                                     </div>
-                                    <LoginMessage message={errorMessageElement} />
-                                    <div className="text-center mt-8">
-                                        <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Sign In</button>
+
+                                    {
+                                        errorMessageElement ? (
+                                            <div className="mb-5" >
+                                                <LoginMessage message={errorMessageElement} />
+                                            </div>
+                                        ) : ''
+                                    }
+                                    <div className="w-full flex justify-center sm:px-0 ">
+                                        <button type="submit" className="max-w-sm text-white w-full  bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-center gap-2 mr-2 mb-2">Sign in</button>
+                                    </div>
+                                    <hr className="mt-5 mb-5" />
+                                    <div className="w-full flex justify-center  sm:px-0 ">
+                                        <button className="w-96 justify-center  px-4 py-2 border flex gap-2 border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150">
+                                            <img className="w-6 h-6" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo" />
+                                            <span>Login with Google</span>
+                                        </button>
                                     </div>
                                 </form>
                             </div>

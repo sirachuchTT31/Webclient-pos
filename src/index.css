@@ -7,7 +7,25 @@
   touch-action: manipulation !important;
 }
 
-.input-group{
+input[type="text"] {
+  outline: none;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border: 2px solid #ddd !important;
+}
+
+.input-group {
   display: block;
   margin-bottom: 12px;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #EEEEEE;
+
 }
