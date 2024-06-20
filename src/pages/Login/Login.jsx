@@ -7,6 +7,8 @@ import LoginMessage from "../../components/Alert/LoginMessage";
 import localstorageServicefrom from '../../service/localstorage.service'
 // import { redirect } from "react-router-dom";
 import Regex from "../../common/Regex/Regex";
+import Constant from '../../constant/constant'
+import {GoogleLogin } from '@react-oauth/google';
 export default function Login() {
     // const MySwal = withReactContent(Swal)
     const { register, handleSubmit, formState: { errors }, } = useForm();
@@ -35,6 +37,13 @@ export default function Login() {
             seterrorerrorMessageElement('Email is invalid OR Password is invalid')
         }
     }
+
+    const responseMessage = (response) => {
+        console.log(response);
+    };
+    const errorMessage = (error) => {
+        console.log(error);
+    };
 
     return (
         <>
@@ -73,10 +82,14 @@ export default function Login() {
                                     </div>
                                     <hr className="mt-5 mb-5" />
                                     <div className="w-full flex justify-center  sm:px-0 ">
-                                        <button className="w-96 justify-center  px-4 py-2 border flex gap-2 border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150">
+                                        {/* <button className="w-96 justify-center  px-4 py-2 border flex gap-2 border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150" onClick={openGoogleAuthen}>
                                             <img className="w-6 h-6" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo" />
                                             <span>Login with Google</span>
-                                        </button>
+                                        </button> */}
+                                        {/* <GoogleOAuthProvider clientId={Constant.Api.googleClientId}></GoogleOAuthProvider> */}
+                                        <GoogleLogin
+                                            onSuccess={responseMessage} onError={errorMessage}
+                                        />
                                     </div>
                                 </form>
                             </div>
