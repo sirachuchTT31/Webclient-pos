@@ -8,7 +8,6 @@ import localstorageServicefrom from '../../service/localstorage.service'
 // import { redirect } from "react-router-dom";
 import Regex from "../../common/Regex/Regex";
 import Constant from '../../constant/constant'
-import {GoogleLogin } from '@react-oauth/google';
 export default function Login() {
     // const MySwal = withReactContent(Swal)
     const { register, handleSubmit, formState: { errors }, } = useForm();
@@ -39,7 +38,7 @@ export default function Login() {
     }
 
     async function googleRedirectAuthen(){
-        window.location.href = 'http://localhost:3000/v1/auth/google'
+        window.location.href = `${Constant.Api.baseUrl}/v1/auth/google`
     }
 
     const responseMessage = (response) => {

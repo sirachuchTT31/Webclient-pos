@@ -9,6 +9,7 @@ import localstorageServicefrom from './service/localstorage.service'
 import PrivateRoute from "./common/PrivateRoute.jsx";
 import PublicRoute from "./common/PublicRoute.jsx";
 import { RingLoader } from "react-spinners"
+import GoogleAuth from "./pages/Landing/Googleauth.jsx";
 function App() {
   const isAuthentication = localstorageServicefrom.getAccesstoken() ? true : false
   const [loading, setLoading] = useState(true);
@@ -30,6 +31,9 @@ function App() {
         </div>
       ) : (
         <BrowserRouter>
+          <Routes >
+            <Route path="/landing-google" element={<GoogleAuth />} />
+          </Routes>
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route path="/dashboard" element={

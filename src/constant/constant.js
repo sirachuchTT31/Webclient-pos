@@ -1,6 +1,7 @@
 export default {
+    secreatKey : 'xfdFmczFOrFdAwhStENGxcxcxdggbbvcbcvbcvbvc',
     Api: {
-        baseUrl: 'http://localhost:3000/',
+        baseUrl: 'http://localhost:3000/api/',
         options: {
             headers: {
                 'content-type': 'application/json',
